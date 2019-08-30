@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CRUD Node.js and Mysql</title>
+  <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+  <div class="container">
+    <h2>Kategori List</h2>
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Add New</button>
+    <table class="table table-striped" id="mytable">
+      <thead>
+        <tr>
+          <th>kategori ID</th>
+          <th>kategori name</th>
+          <th>Kategori detail</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+         {{#each results}}
+        <tr>
+          <td>{{ kategori_id }}</td>
+          <td>{{ kategori_name }}</td>
+          <td>{{ kategori_detail }}</td>
+          <td>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="{{ kategori_id }}" data-kategori_name="{{ kategori_name }}" data-kategori_detail="{{ kategori_detail }}">Edit</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{ kategori_id }}">Delete</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+    <!-- Modal Add kategori-->
+      <form action="/save" method="post">
+        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add New kategori</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <input type="text" name="kategori_name" class="form-control" placeholder="kategori Name" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="kategori_detail" class="form-control" placeholder="Kategori detail" required>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
+             </div>
+           </div>
+         </div>
+        </div>
+     </form>
+
+     <!-- Modal Update kategori-->
+   <form action="/update" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit kategori</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <input type="text" name="kategori_name" class="form-control kategori_name" placeholder="kategori Name" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="kategori_detail" class="form-control kategori_detail" placeholder="Kategori Detail" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="kategori_id">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+
+     <!-- Modal Delete kategori-->
+      <form id="add-row-form" action="/delete" method="post">
+         <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                                        <h5 class="modal-title" id="myModalLabel">Delete kategori</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   </div>
+                   <div class="modal-body">
+                                                 <strong>Are you sure to delete this data?</strong>
+                   </div>
+                   <div class="modal-footer">
+                                            <input type="hidden" name="kategori_id" class="form-control kategori_id2" required>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                   </div>
+                    </div>
+            </div>
+         </div>
+     </form>
+
+<script src="/assets/js/jquery-3.3.1.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function(){
+            //showing data to edit modal      $('#mytable').on('click','.edit',function(){
+        var kategori_id = $(this).data('id');
+        var kategori_name = $(this).data('kategori_name');
+        var kategori_detail = $(this).data('kategori_detail');
+        $('#EditModal').modal('show');
+        $('.kategori_name').val(kategori_name);
+        $('.kategori_detail').val(kategori_detail);
+        $('.kategori_id').val(kategori_id);
+      });
+            //showing delete record modal
+            $('#mytable').on('click','.delete',function(){
+        var kategori_id = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.kategori_id2').val(kategori_id);
+      });
+
+    });
+</script>
+</body>
+</html>
